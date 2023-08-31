@@ -1,0 +1,206 @@
+.heading {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #555;
+  margin-top: -20px;
+}
+
+.registration_container {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+.popup_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.popup_content {
+  background-color: #ffffff;
+  padding: 30px;
+  width: 400px;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input_container {
+  margin-bottom: 20px;
+}
+
+.input_container input {
+  width: 100%;
+  height: 18px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  background-color: #f4f4f4;
+  color: #333;
+  border: 1px solid #d1d1d1;
+}
+
+.input_container input:focus {
+  outline: none;
+  border-color: rgb(159, 76, 219);
+}
+
+.forgot_password {
+  font-size: 14px;
+  margin-top: 15px;
+  color: rgb(159, 76, 219);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.popup_buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: -20px;
+  margin-left: 150px;
+}
+
+.popup_button {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.popup_button:hover {
+  border-color: rgb(234, 230, 237);
+}
+.social_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s, color 0.3s;
+  color: #007bff;
+}
+.social_button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.error_message_container {
+  margin-bottom: 10px;
+}
+.error_message {
+  color: red;
+  font-size: 14px;
+}
+
+.gender_container {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.gender_label {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 36px;
+}
+
+.gender_radio_container {
+  display: flex;
+  align-items: center;
+}
+
+.gender_radio_label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.gender_radio_label input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.gender_radio_label input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-right: 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.gender_radio_label input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: black;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gender_radio_label span {
+  margin-left: 4px;
+}
+.register_button {
+  background-color: rgb(211, 178, 235);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  height: 40px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+.register_button:hover {
+  background-color: rgb(159, 76, 219);
+}
+.back_button {
+  background-color: transparent;
+  border: none;
+  color: rgb(211, 178, 235);
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+  margin-bottom: 10px;
+  margin-right: 250px;
+}
+
+.back_button:hover {
+  color: rgb(159, 76, 219);
+}

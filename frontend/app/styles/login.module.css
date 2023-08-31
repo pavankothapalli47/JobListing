@@ -1,0 +1,162 @@
+.heading {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #555;
+}
+
+.popup_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.popup_content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+.login_container h2 {
+  margin-bottom: 20px;
+  color: #333333;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input_container {
+  margin-bottom: 20px;
+}
+
+.input_container input {
+  width: 100%;
+  height: 18px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.input_container input:focus {
+  outline: none;
+  border-color: rgb(159, 76, 219);
+}
+
+.forgot_password {
+  font-size: 14px;
+  margin-top: 15px;
+  color: rgb(159, 76, 219);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.login_button {
+  background-color: rgb(211, 178, 235);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  height: 40px;
+  width: 100%;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.login_button:hover {
+  background-color: rgb(159, 76, 219);
+}
+
+.login_via_otp {
+  font-size: 14px;
+  color: rgb(159, 76, 219);
+  margin-top: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.popup_buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.popup_button {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.popup_button:hover {
+  border-color: rgb(234, 230, 237);
+}
+.social_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s, color 0.3s;
+  color: #007bff;
+}
+.LinkedinBtn {
+  color: #007bff;
+}
+.social_button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.error_message_container {
+  margin-bottom: 10px;
+}
+.error_message {
+  color: red;
+  font-size: 14px;
+}
+.back_button {
+  background-color: transparent;
+  border: none;
+  color: rgb(211, 178, 235);
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+  margin-bottom: 10px;
+  margin-right: 250px;
+}
+
+.back_button:hover {
+  color: rgb(159, 76, 219);
+}
