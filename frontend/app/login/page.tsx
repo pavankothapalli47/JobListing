@@ -75,7 +75,7 @@ const SocialButtons = styled("div")({
   marginTop: "1rem",
 });
 
-export default function LoginForm() {
+const LoginForm = () => {
   const {
     handleSubmit,
     register,
@@ -128,7 +128,7 @@ export default function LoginForm() {
           label="Enter Email ID/Phone Number *"
           {...register("emailOrPhone")}
           error={!!errors.emailOrPhone}
-          onChange={(e) => setEmailOrPhone(e.target.value)}
+          onChange={(e: any) => setEmailOrPhone(e.target.value)}
           fullWidth
           margin="normal"
           helperText={errors.emailOrPhone?.message}
@@ -138,7 +138,7 @@ export default function LoginForm() {
           label="Enter your password *"
           {...register("password")}
           error={!!errors.password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e: any) => setPassword(e.target.value)}
           fullWidth
           margin="normal"
           helperText={errors.password?.message}
@@ -166,4 +166,5 @@ export default function LoginForm() {
       </form>
     </LoginContainer>
   );
-}
+};
+export default LoginForm;

@@ -18,7 +18,7 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedDialogs() {
+const LoginPopup = () => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -41,7 +41,7 @@ export default function CustomizedDialogs() {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            color: (theme: any) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
@@ -52,4 +52,5 @@ export default function CustomizedDialogs() {
       </StyledDialog>
     </>
   );
-}
+};
+export default LoginPopup;

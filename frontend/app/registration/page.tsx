@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -81,6 +81,8 @@ const validationSchema = yup.object().shape({
 });
 
 const RegistrationForm: React.FC = () => {
+  const [testPopup, setTestPopup] = useState(false);
+  // const [data, setData] = useState([]);
   const {
     handleSubmit,
     register,
@@ -90,7 +92,7 @@ const RegistrationForm: React.FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
-
+  // useEffect(() => {}, []);
   const handleRegistration = async (data: any) => {
     setErrorMessage(""); // Clearing the previous error messages
     try {
@@ -99,7 +101,6 @@ const RegistrationForm: React.FC = () => {
         "http://localhost:3001/api/register",
         data
       );
-
       if (response.status === 200) {
         window.location.href = "/home";
         toast.success("Registered Successfully!", {
@@ -177,6 +178,7 @@ const RegistrationForm: React.FC = () => {
           <GrLinkedin className={styles.LinkedinBtn} />
         </IconButton>
       </SocialButtons>
+      {/* {testPopup && <LoginPopup />} */}
     </StyledForm>
   );
 };

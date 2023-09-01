@@ -22,7 +22,7 @@ const Header = () => {
   const [showExperience, setShowExperience] = useState(false);
   const [skillsOrJobTitle, setSkillsOrJobTitle] = useState("");
   const [location, setLocation] = useState("");
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleCount = () => {
     // console.log("Increment button clicked");

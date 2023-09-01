@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
 import {
   Container,
   Paper,
@@ -79,19 +80,21 @@ const EmployerLogin = () => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [showLoginLink, setShowLoginLink] = useState(true);
   const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [lottieAnimation, setLottieAnimation] = useState<AnimationData>(
     showRegistration ? job6 : job5
   );
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    const email = e.currentTarget.email.value;
-    const password = e.currentTarget.password.value;
+    const enteredEmail = email;
+    const enteredPassword = password;
 
     if (showRegistration) {
       const phoneNumber = e.currentTarget.phoneNumber.value;
 
-      // Perform registration logic and send data to backend
+      // Performing registration logic and send data to backend
       try {
         const response = await axios.post(
           "http://localhost:3001/api/registeremployers",
@@ -104,9 +107,9 @@ const EmployerLogin = () => {
         );
 
         if (response.status === 200) {
-          window.location.href = "/home";
+          window.location.href = "/employersPage";
           toast.success("Registered Successfully!", {
-            duration: 10000,
+            duration: 20000,
           });
         }
       } catch (error) {
@@ -126,9 +129,9 @@ const EmployerLogin = () => {
         );
 
         if (response.status === 200) {
-          window.location.href = "/home";
+          window.location.href = "/employersPage";
           toast.success("Logged In Successfully!", {
-            duration: 50000,
+            duration: 20000,
           });
         }
       } catch (error) {
@@ -168,20 +171,25 @@ const EmployerLogin = () => {
               variant="outlined"
               margin="normal"
               fullWidth
+              required
               id="email"
               label="Email Address/Phone Number"
               autoComplete="email"
-              // {...register("email")}
-              // error={!!formState.errors.email}
-              // helperText={formState.errors.email?.message}
+              value={email} // Bind value to state
+              onChange={(e: any) => setEmail(e.target.value)} // Update state on change
+              //        {/* // {...register("email")}
+              // // error={!!formState.errors.email}
+              // // helperText={formState.errors.email?.message} */}
             />
+
             {showRegistration && (
               <div>
                 <TextField
                   variant="outlined"
                   margin="normal"
                   fullWidth
-                  label="Full Name *"
+                  required
+                  label="Full Name"
                   type="tel"
                   id="Name"
                   autoComplete="Name"
@@ -193,7 +201,8 @@ const EmployerLogin = () => {
                   variant="outlined"
                   margin="normal"
                   fullWidth
-                  label="Phone Number *"
+                  required
+                  label="Phone Number"
                   type="tel"
                   id="phoneNumber"
                   autoComplete="tel"
@@ -205,10 +214,13 @@ const EmployerLogin = () => {
                   variant="outlined"
                   margin="normal"
                   fullWidth
+                  required
                   type="tel"
-                  label="Company Name *"
+                  label="Company Name"
                   id="companyName"
                   autoComplete="tel"
+                  value={companyName}
+                  onChange={(e: any) => setCompanyName(e.target.value)}
                   // {...register("companyName")}
                   // error={!!formState.errors.companyName}
                   // helperText={formState.errors.companyName?.message}
@@ -219,13 +231,15 @@ const EmployerLogin = () => {
               variant="outlined"
               margin="normal"
               fullWidth
+              required
               name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e: any) => setPassword(e.target.value)}
             />
-
             <Button
               type="submit"
               fullWidth

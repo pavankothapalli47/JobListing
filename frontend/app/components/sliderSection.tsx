@@ -32,6 +32,7 @@ const SliderSection = () => {
     "Jpmorgan.png",
     "cyient.png",
   ];
+  const duplicatedLogos = [...companyLogos, ...companyLogos];
 
   return (
     <div>
@@ -44,7 +45,7 @@ const SliderSection = () => {
       </p>
       <div className={styles.carousel_container}>
         <div className={styles.logo_row}>
-          {companyLogos.map((logo, index) => (
+          {duplicatedLogos.map((logo, index) => (
             <div key={index} className={styles.logo_column}>
               <img
                 src={logo}
