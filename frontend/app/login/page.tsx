@@ -14,6 +14,8 @@ import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
   emailOrPhone: yup
@@ -75,7 +77,11 @@ const SocialButtons = styled("div")({
   marginTop: "1rem",
 });
 
-const LoginForm = () => {
+const LoginForm: React.FC<any> = (props) => {
+  const router = useRouter();
+  const { test } = props;
+
+  const session = useSession;
   const {
     handleSubmit,
     register,
@@ -99,7 +105,8 @@ const LoginForm = () => {
 
       if (response.status === 200) {
         // successful login then to homepage
-        window.location.href = "/home";
+        test();
+        router.push("/home");
         toast.success("Logged In Successfully!", {
           duration: 3000,
         });
@@ -157,7 +164,7 @@ const LoginForm = () => {
         </LoginViaOtpButton>
         <SocialButtons>
           <IconButton>
-            <FcGoogle />
+            <FcGoogle onClick={() => signIn("google")} />
           </IconButton>
           <IconButton>
             <GrLinkedin className={styles.LinkedinBtn} />

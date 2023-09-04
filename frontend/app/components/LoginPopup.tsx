@@ -18,7 +18,9 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const LoginPopup = () => {
+const LoginPopup: React.FC<any> = (props) => {
+  const { test } = props;
+  // console.log(test);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -47,7 +49,7 @@ const LoginPopup = () => {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <LoginForm />
+          <LoginForm test={test} />
         </DialogContent>
       </StyledDialog>
     </>

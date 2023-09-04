@@ -22,7 +22,12 @@ const Header = () => {
   const [showExperience, setShowExperience] = useState(false);
   const [skillsOrJobTitle, setSkillsOrJobTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  // console.log(isLoggedIn);
+  const testHandler = () => {
+    setIsLoggedIn(false);
+  };
 
   const handleCount = () => {
     // console.log("Increment button clicked");
@@ -67,14 +72,18 @@ const Header = () => {
         </a>
         <div className={styles.buttonContainer}>
           <p className={styles.btnLogin}>
-            <LoginPopup />
+            {isLoggedIn ? <LoginPopup test={testHandler} /> : ""}
           </p>
           <p className={styles.btnRegister}>
-            <RegistrationPopup />
+            {isLoggedIn ? <RegistrationPopup test={testHandler} /> : ""}
           </p>
-          <Link href="/employers">
-            <Button className={styles.btnEmployer_Link}>For employers</Button>
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/employers">
+              <Button className={styles.btnEmployer_Link}>For employers</Button>
+            </Link>
+          ) : (
+            ""
+          )}
           <AccountMenu />
         </div>
       </div>

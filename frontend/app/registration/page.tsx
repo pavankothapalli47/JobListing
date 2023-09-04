@@ -17,6 +17,8 @@ import styles from "@/app/styles/login.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { signIn, useSession } from "next-auth/react";
+// import { useRouter } from "next/navigation";
 
 interface RegistrationData {
   fullName: string;
@@ -81,7 +83,7 @@ const validationSchema = yup.object().shape({
 });
 
 const RegistrationForm: React.FC = () => {
-  const [testPopup, setTestPopup] = useState(false);
+  const session = useSession;
   // const [data, setData] = useState([]);
   const {
     handleSubmit,
@@ -172,7 +174,7 @@ const RegistrationForm: React.FC = () => {
       </form>
       <SocialButtons>
         <IconButton>
-          <FcGoogle />
+          <FcGoogle onClick={() => signIn("google")} />
         </IconButton>
         <IconButton>
           <GrLinkedin className={styles.LinkedinBtn} />

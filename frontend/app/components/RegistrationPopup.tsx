@@ -18,7 +18,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedDialogs() {
+const CustomizedDialogs: React.FC<any> = (props) => {
+  const { test } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -47,7 +48,7 @@ export default function CustomizedDialogs() {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme:any) => theme.palette.grey[500],
+            color: (theme: any) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
@@ -58,4 +59,5 @@ export default function CustomizedDialogs() {
       </BootstrapDialog>
     </>
   );
-}
+};
+export default CustomizedDialogs;
