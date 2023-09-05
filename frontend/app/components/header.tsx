@@ -20,7 +20,7 @@ import Button from "@mui/material/Button";
 const Header = () => {
   const [experience, setExperience] = useState(0);
   const [showExperience, setShowExperience] = useState(false);
-  const [skillsOrJobTitle, setSkillsOrJobTitle] = useState("");
+  const [JobTitle, setJobTitle] = useState("");
   const [location, setLocation] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -44,17 +44,17 @@ const Header = () => {
 
   const handleSearch = () => {
     const searchData = {
-      skillsOrJobTitle,
+      JobTitle,
       location,
       experience,
     };
 
-    // fetch(`https://dummyjson.com/posts/search?q=${skillsOrJobTitle}`)
+    // fetch(`https://dummyjson.com/posts/search?q=${JobTitle}`)
     //   .then((res) => res.json())
     //   .then(console.log);
 
     axios
-      .post("https://dummyjson.com/posts/search?q=", searchData)
+      .post("http://localhost:3001/api/jobs/search", searchData)
       .then((response) => {
         const data = response.data;
         // Handling the response from the backend
@@ -94,12 +94,12 @@ const Header = () => {
               <AiOutlineSearch className={styles.icon} />
               <input
                 type="text"
-                placeholder="Skills or Job Title"
+                placeholder="Job Title"
                 className={styles.searchInput}
-                value={skillsOrJobTitle}
+                value={JobTitle}
                 onChange={(e) => {
-                  setSkillsOrJobTitle(e.target.value);
-                  // console.log(skillsOrJobTitle);
+                  setJobTitle(e.target.value);
+                  // console.log(JobTitle);
                 }}
               />
             </div>

@@ -27,6 +27,24 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
+// Define a route to search for jobs
+app.post("/api/jobs/search", async (req, res) => {
+  const { JobTitle, location, experience } = req.body;
+  try {
+    // Construct a query to find relevant job postings in your database
+    const jobPostings = await Job.find({
+      jobTitle: { $regex: new RegExp(JobTitle, "i") }, // Case-insensitive title search
+      location: { $regex: new RegExp(location, "i") }, // Case-insensitive location search
+      experience: { $gte: experience }, // Experience greater than or equal to the specified value
+    });
+
+    res.status(200).json(jobPostings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+
 // Registration route for users
 app.post("/api/register", async (req, res) => {
   const { fullName, email, password, mobileNumber, gender } = req.body;
@@ -115,7 +133,7 @@ app.post("/api/jobs", async (req, res) => {
     experience,
     location,
     salary,
-    industry,
+    CompanyName,
     workType,
     workLocation,
   } = req.body;
@@ -128,7 +146,7 @@ app.post("/api/jobs", async (req, res) => {
       experience,
       location,
       salary,
-      industry,
+      CompanyName,
       workType,
       workLocation,
     });
@@ -139,6 +157,51 @@ app.post("/api/jobs", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error posting job!" });
+  }
+});
+
+app.delete("/api/jobs/:id", async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const deletedJob = await Job.findByIdAndRemove(jobId);
+    if (!deletedJob) {
+      return res.status(404).json({ message: "Job not found." });
+    }
+    res.status(200).json({ message: "Job deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting job:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+
+// Define a route to fetch job postings
+app.get("/api/jobs", async (req, res) => {
+  try {
+    // Fetch job postings from your database
+    const jobPostings = await Job.find();
+
+    res.status(200).json(jobPostings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+
+app.put("/api/jobs/:id", async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, {
+      new: true,
+    });
+    if (!updatedJob) {
+      return res.status(404).json({ message: "Job not found." });
+    }
+    res
+      .status(200)
+      .json({ message: "Job updated successfully.", job: updatedJob });
+  } catch (error) {
+    console.error("Error updating job:", error);
+    res.status(500).json({ message: "Internal server error." });
   }
 });
 

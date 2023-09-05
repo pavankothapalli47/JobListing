@@ -41,7 +41,7 @@ const EmployerPage = () => {
     experience: "",
     location: "",
     salary: "",
-    industry: "",
+    CompanyName: "",
     workType: "",
     workLocation: "",
   });
@@ -70,10 +70,11 @@ const EmployerPage = () => {
         experience: "",
         location: "",
         salary: "",
-        industry: "",
+        CompanyName: "",
         workType: "",
         workLocation: "",
       });
+      window.location.href = "/employerPage";
     } catch (error) {
       toast.error("Error posting job!", {
         duration: 20000,
@@ -144,11 +145,11 @@ const EmployerPage = () => {
             onChange={handleInputChange}
           />
           <TextField
-            label="Industry"
+            label="Company"
             fullWidth
             margin="normal"
-            name="industry"
-            value={jobData.industry}
+            name="CompanyName"
+            value={jobData.CompanyName}
             onChange={handleInputChange}
           />
           <FormControl fullWidth margin="normal">
@@ -160,9 +161,8 @@ const EmployerPage = () => {
               value={jobData.workType}
               onChange={handleInputChange}
             >
-              <MenuItem value="full-time">Full-time</MenuItem>
-              <MenuItem value="part-time">Part-time</MenuItem>
-              <MenuItem value="remote">Remote</MenuItem>
+              <MenuItem value="Full-time">Full-time</MenuItem>
+              <MenuItem value="Part-time">Part-time</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth margin="normal">
@@ -174,9 +174,9 @@ const EmployerPage = () => {
               value={jobData.workLocation}
               onChange={handleInputChange}
             >
-              <MenuItem value="office">Office</MenuItem>
-              <MenuItem value="remote">Remote</MenuItem>
-              <MenuItem value="hybrid">Hybrid</MenuItem>
+              <MenuItem value="Office">Office</MenuItem>
+              <MenuItem value="Remote">Remote</MenuItem>
+              <MenuItem value="Hybrid">Hybrid</MenuItem>
             </Select>
           </FormControl>
           <PostButton

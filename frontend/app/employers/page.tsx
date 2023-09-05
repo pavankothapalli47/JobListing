@@ -107,7 +107,7 @@ const EmployerLogin = () => {
         );
 
         if (response.status === 200) {
-          window.location.href = "/employersPage";
+          window.location.href = "/JobPosting";
           toast.success("Registered Successfully!", {
             duration: 20000,
           });
@@ -129,7 +129,7 @@ const EmployerLogin = () => {
         );
 
         if (response.status === 200) {
-          window.location.href = "/employersPage";
+          window.location.href = "/JobPosting";
           toast.success("Logged In Successfully!", {
             duration: 20000,
           });
