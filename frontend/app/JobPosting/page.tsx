@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Container,
   Typography,
@@ -24,7 +25,17 @@ const PageContainer = styled("div")({
   justifyContent: "space-between",
 });
 
+const buttonStyle = {
+  color: "rgb(128, 144, 232)",
+  borderColor: "rgb(128, 144, 232)",
+};
 const Division = styled("div")({});
+
+const FlexContainer = styled(Container)({
+  display: "flex",
+  justifyContent: "space-between", // Aligns the button to the right
+  alignItems: "center", // Vertically centers the button
+});
 
 const PostButton = styled(Button)({
   backgroundColor: "rgb(128, 144, 228)",
@@ -36,6 +47,7 @@ const PostButton = styled(Button)({
 });
 
 const EmployerPage = () => {
+  const router = useRouter();
   const [jobData, setJobData] = useState({
     jobTitle: "",
     experience: "",
@@ -109,9 +121,20 @@ const EmployerPage = () => {
             // backgroundColor: "rgb(128, 144, 228)",
           }}
         >
-          <Typography variant="h4" gutterBottom sx={{ fontSize: 26 }}>
-            Post a New Job
-          </Typography>
+          <FlexContainer>
+            <Typography variant="h4" gutterBottom sx={{ fontSize: 26 }}>
+              Post a New Job
+            </Typography>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                router.push("/employerProfile");
+              }}
+              style={buttonStyle}
+            >
+              Profile
+            </Button>
+          </FlexContainer>
           <TextField
             label="Job Title"
             fullWidth

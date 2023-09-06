@@ -93,12 +93,13 @@ const EmployerLogin = () => {
 
     if (showRegistration) {
       const phoneNumber = e.currentTarget.phoneNumber.value;
-
+      const fullName = e.currentTarget.fullName.value;
       // Performing registration logic and send data to backend
       try {
         const response = await axios.post(
           "http://localhost:3001/api/registeremployers",
           {
+            fullName,
             email,
             password,
             phoneNumber,
@@ -191,7 +192,7 @@ const EmployerLogin = () => {
                   required
                   label="Full Name"
                   type="tel"
-                  id="Name"
+                  id="fullName"
                   autoComplete="Name"
                   // {...register("name")}
                   // error={!!formState.errors.name}

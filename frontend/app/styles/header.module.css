@@ -22,25 +22,6 @@
   gap: 10px;
   margin-top: -85px !important;
 }
-
-/* .btnLogin,
-.btnRegister,
-.btnEmployersLogin {
-  color: rgb(17, 16, 16) !important;
-  cursor: pointer !important;
-}
-.btnEmployersLogin{
-  
-.btnLogin:hover,
-.btnRegister:hover,
-.btnEmployersLogin:hover {
-  color: rgb(110, 0, 190);
-  border-bottom: 1.8px solid rgb(110, 0, 190);
-} */
-
-/* .btnRegister {
-  color: rgb(240, 34, 69);
-} */
 .btnEmployer_Link {
   margin-top: 15px;
 }
@@ -51,23 +32,15 @@
 }
 .search_bar {
   display: flex;
-  align-items: center;
 }
 
 .search_box {
+  display: flex;
+  align-items: center;
   position: relative;
   margin-right: 10px;
 }
 
-.search_box input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  width: 260px;
-  height: 30px;
-  cursor: pointer;
-}
 .search_box i {
   position: absolute;
   top: 50%;
@@ -93,7 +66,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 5px;
+  left: 10px;
   color: black;
 }
 .iconbox {
@@ -105,25 +78,14 @@
   color: rgb(51, 51, 51);
 }
 .iconWrapper {
-  position: relative;
   display: flex;
   align-items: center;
-}
-.icon {
-  font-size: 24px;
-  color: black;
-  margin-right: 10px;
-  padding-left: 5px;
-}
-.search_box input::placeholder {
-  color: gray;
-  padding-left: 20px;
 }
 .search_box input {
   padding-left: 55px;
   font-size: 16px;
   width: 250px;
-  height: 30px;
+  height: 20px;
   cursor: pointer;
 }
 .inputContainer {
@@ -131,18 +93,7 @@
   align-items: center;
   position: relative;
 }
-.arrowButtons {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  right: 0;
-}
-.arrowButton {
-  border: none;
-  background: none;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
+
 .successMessage {
   background-color: #4caf50;
   color: white;
@@ -156,7 +107,6 @@
   border-radius: 5px;
   animation: fadeOut 5s ease-in-out;
 }
-
 @keyframes fadeOut {
   0% {
     opacity: 1;
@@ -169,3 +119,22 @@
 .employersLink {
   text-decoration: none;
 }
+
+/* .btnLogin,
+.btnRegister,
+.btnEmployersLogin {
+  color: rgb(17, 16, 16) !important;
+  cursor: pointer !important;
+}
+.btnEmployersLogin{
+  
+.btnLogin:hover,
+.btnRegister:hover,
+.btnEmployersLogin:hover {
+  color: rgb(110, 0, 190);
+  border-bottom: 1.8px solid rgb(110, 0, 190);
+} */
+
+/* .btnRegister {
+  color: rgb(240, 34, 69);
+} */

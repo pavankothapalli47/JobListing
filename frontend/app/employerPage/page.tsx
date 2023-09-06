@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Table,
   TableBody,
@@ -17,6 +18,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import FadeMenu from "@/app/components/employerMenu";
 
 interface JobData {
   _id: string;
@@ -96,6 +98,10 @@ const EmployerPage: React.FC = () => {
     }
   };
 
+  // const logout = () => {
+  //   router.push("/home");
+  // };
+
   return (
     <ThemeProvider theme={colorfulTheme}>
       <StyledContainer>
@@ -108,7 +114,8 @@ const EmployerPage: React.FC = () => {
           >
             Job Postings
           </Typography>
-          <SmallButton
+          <FadeMenu />
+          {/* <SmallButton
             variant="contained"
             color="primary"
             onClick={() => {
@@ -116,7 +123,14 @@ const EmployerPage: React.FC = () => {
             }}
           >
             Post Job
-          </SmallButton>
+          </SmallButton> */}
+          {/* <SmallButton
+            variant="contained"
+            color="primary"
+            onClick={logout} // Call the logout function on button click
+          >
+            Logout
+          </SmallButton> */}
         </FlexContainer>
         <TableContainer component={Paper}>
           <StyledTable aria-label="Job Postings">
@@ -144,8 +158,9 @@ const EmployerPage: React.FC = () => {
                   <TableCell>{job.workLocation}</TableCell>
                   <TableCell>
                     <Button
+                      startIcon={<DeleteIcon />}
                       onClick={() => deleteJob(job._id)}
-                      variant="contained"
+                      variant="outlined"
                       color="secondary"
                     >
                       Delete

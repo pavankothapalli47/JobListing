@@ -89,7 +89,7 @@ app.post("/api/login", async (req, res) => {
 
 // Registration route for employers
 app.post("/api/registeremployers", async (req, res) => {
-  const { email, password, phoneNumber, companyName } = req.body;
+  const { fullName, email, password, phoneNumber, companyName } = req.body;
   try {
     const existingEmployer = await Employer.findOne({ email });
     if (existingEmployer) {
@@ -97,6 +97,7 @@ app.post("/api/registeremployers", async (req, res) => {
     }
 
     const newEmployer = new Employer({
+      fullName,
       email,
       password,
       phoneNumber,
@@ -201,6 +202,31 @@ app.put("/api/jobs/:id", async (req, res) => {
       .json({ message: "Job updated successfully.", job: updatedJob });
   } catch (error) {
     console.error("Error updating job:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+// Define a route to get employer details
+app.get("/api/employer-profile", async (req, res) => {
+  try {
+    // Assuming you have an Employer model/schema defined
+    const employer = await Employer.findOne({
+      /* Add a query condition here if needed */
+    });
+
+    if (!employer) {
+      return res.status(404).json({ message: "Employer not found." });
+    }
+    // Assuming your Employer model has the necessary fields
+    const employerData = {
+      fullName: employer.fullName,
+      email: employer.email,
+      phoneNumber: employer.phoneNumber,
+      CompanyName: employer.companyName,
+    };
+
+    res.status(200).json(employerData);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal server error." });
   }
 });

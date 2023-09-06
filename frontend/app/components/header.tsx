@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/app/Styles/Header.module.css";
 import "@fontsource/roboto/700.css";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -14,8 +14,10 @@ import axios from "axios";
 import Link from "next/link";
 import LoginPopup from "./LoginPopup";
 import RegistrationPopup from "@/app/components/RegistrationPopup";
-import AccountMenu from "./userProfile";
+import AccountMenu from "@/app/components/userMenu";
 import Button from "@mui/material/Button";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 const Header = () => {
   const [experience, setExperience] = useState(0);
@@ -23,23 +25,31 @@ const Header = () => {
   const [JobTitle, setJobTitle] = useState("");
   const [location, setLocation] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [jobTitleOptions, setJobTitleOptions] = useState([]);
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [experienceOptions, setExperienceOptions] = useState([]);
+
+  useEffect(() => {
+    // Fetch your job title options and set them
+    // Example fetch:
+    // axios.get("https://api.example.com/job-titles").then((response) => {
+    //   setJobTitleOptions(response.data);
+    // });
+    // Fetch your location options and set them
+    // Example fetch:
+    // axios.get("https://api.example.com/locations").then((response) => {
+    //   setLocationOptions(response.data);
+    // });
+    // Fetch your experience options and set them
+    // Example fetch:
+    // axios.get("https://api.example.com/experience").then((response) => {
+    //   setExperienceOptions(response.data);
+    // });
+  }, []);
 
   // console.log(isLoggedIn);
   const testHandler = () => {
     setIsLoggedIn(false);
-  };
-
-  const handleCount = () => {
-    // console.log("Increment button clicked");
-    setExperience(experience + 1);
-    setShowExperience(true);
-  };
-
-  const handleDecrement = () => {
-    // console.log("Decrement button clicked");
-    if (experience > 0) {
-      setExperience(experience - 1);
-    }
   };
 
   const handleSearch = () => {
@@ -92,58 +102,64 @@ const Header = () => {
           <div className={styles.search_box}>
             <div className={styles.iconWrapper}>
               <AiOutlineSearch className={styles.icon} />
-              <input
-                type="text"
-                placeholder="Job Title"
-                className={styles.searchInput}
-                value={JobTitle}
-                onChange={(e) => {
-                  setJobTitle(e.target.value);
-                  // console.log(JobTitle);
+              <Autocomplete
+                options={jobTitleOptions}
+                onInputChange={(e, newValue) => {
+                  setJobTitle(newValue);
                 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Job Title"
+                    variant="outlined"
+                    className={styles.searchInput}
+                    style={{
+                      width: "320px",
+                    }}
+                  />
+                )}
               />
             </div>
           </div>
           <div className={styles.search_box}>
             <div className={styles.iconWrapper}>
               <SlLocationPin className={styles.icon} />
-              <input
-                type="text"
-                placeholder="Location"
-                className={styles.searchInput}
-                value={location}
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                  // console.log(location);
+              <Autocomplete
+                options={locationOptions}
+                onInputChange={(e, newValue) => {
+                  setLocation(newValue);
                 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Location"
+                    variant="outlined"
+                    style={{ width: "320px" }}
+                    className={styles.searchInput}
+                  />
+                )}
               />
             </div>
           </div>
           <div className={styles.search_box}>
             <div className={styles.inputContainer}>
               <CgToolbox className={styles.iconbox} />
-              <input
-                type="number"
-                placeholder={showExperience ? "Experience" : "Experience"}
-                className={`${styles.searchInput} ${styles.hide}`}
-                value={showExperience ? experience : ""}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  setExperience(Number(inputValue));
-                  // console.log(experience);
+              <Autocomplete
+                options={experienceOptions}
+                onInputChange={(e, newValue) => {
+                  setExperience(Number(newValue));
                 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={showExperience ? "Experience" : "Experience"}
+                    variant="outlined"
+                    className={styles.searchInput}
+                    type={showExperience ? "number" : "text"}
+                    style={{ width: "320px" }}
+                  />
+                )}
               />
-              <div className={styles.arrowButtons}>
-                <button className={styles.arrowButton} onClick={handleCount}>
-                  ▲
-                </button>
-                <button
-                  className={styles.arrowButton}
-                  onClick={() => handleDecrement()}
-                >
-                  ▼
-                </button>
-              </div>
             </div>
           </div>
           <button className={styles.search_button} onClick={handleSearch}>
@@ -184,3 +200,29 @@ const Header = () => {
 };
 
 export default Header;
+
+// const handleCount = () => {
+//   // console.log("Increment button clicked");
+//   setExperience(experience + 1);
+//   setShowExperience(true);
+// };
+
+// const handleDecrement = () => {
+//   // console.log("Decrement button clicked");
+//   if (experience > 0) {
+//     setExperience(experience - 1);
+//   }
+// };
+{
+  /* <div className={styles.arrowButtons}>
+                <button className={styles.arrowButton} onClick={handleCount}>
+                  ▲
+                </button>
+                <button
+                  className={styles.arrowButton}
+                  onClick={() => handleDecrement()}
+                >
+                  ▼
+                </button>
+              </div> */
+}
