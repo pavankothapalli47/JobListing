@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const router = express.Router();
 const mongoose = require("mongoose");
 
 const User = require("./models/User");
@@ -69,6 +70,35 @@ app.post("/api/register", async (req, res) => {
     res.status(500).json({ message: "Internal server error." });
   }
 });
+app.post("/api/apply-job/:jobId", async (req, res) => {
+  const { jobId } = req.params;
+  const { userId } = req.body;
+  console.log("Received userId:", userId);
+
+  try {
+    const user = await User.findById(userId);
+    console.log("Found user:", user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Check if the user has already applied for this job
+    if (user.appliedJobs.includes(jobId)) {
+      return res
+        .status(400)
+        .json({ message: "User already applied for this job." });
+    }
+
+    // Update the user's record to indicate that they have applied for this job
+    user.appliedJobs.push(jobId);
+    await user.save();
+
+    res.status(200).json({ message: "Application submitted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
 
 // Login route for users
 app.post("/api/login", async (req, res) => {
@@ -80,7 +110,7 @@ app.post("/api/login", async (req, res) => {
     if (!user || user.password !== password) {
       return res.status(401).json({ message: "Invalid credentials." });
     }
-    res.status(200).json({ message: "Login successful." });
+    res.status(200).json({ message: "Login successful.", userData: user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error." });
@@ -120,7 +150,9 @@ app.post("/api/loginemployers", async (req, res) => {
     if (!employer || employer.password !== password) {
       return res.status(401).json({ message: "Invalid credentials." });
     }
-    res.status(200).json({ message: "Login successful." });
+    res
+      .status(200)
+      .json({ message: "Login successful.", employerData: employer });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error." });
@@ -137,6 +169,7 @@ app.post("/api/jobs", async (req, res) => {
     CompanyName,
     workType,
     workLocation,
+    createdby,
   } = req.body;
   try {
     if (!jobTitle || !experience || !location) {
@@ -179,7 +212,7 @@ app.delete("/api/jobs/:id", async (req, res) => {
 app.get("/api/jobs", async (req, res) => {
   try {
     // Fetch job postings from your database
-    const jobPostings = await Job.find();
+    const jobPostings = await Job.find().sort({ createdAt: -1 });
 
     res.status(200).json(jobPostings);
   } catch (error) {
@@ -188,24 +221,25 @@ app.get("/api/jobs", async (req, res) => {
   }
 });
 
-app.put("/api/jobs/:id", async (req, res) => {
-  try {
-    const jobId = req.params.id;
-    const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, {
-      new: true,
-    });
-    if (!updatedJob) {
-      return res.status(404).json({ message: "Job not found." });
-    }
-    res
-      .status(200)
-      .json({ message: "Job updated successfully.", job: updatedJob });
-  } catch (error) {
-    console.error("Error updating job:", error);
-    res.status(500).json({ message: "Internal server error." });
-  }
-});
+// app.put("/api/jobs/:id", async (req, res) => {
+//   try {
+//     const jobId = req.params.id;
+//     const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, {
+//       new: true,
+//     });
+//     if (!updatedJob) {
+//       return res.status(404).json({ message: "Job not found." });
+//     }
+//     res
+//       .status(200)
+//       .json({ message: "Job updated successfully.", job: updatedJob });
+//   } catch (error) {
+//     console.error("Error updating job:", error);
+//     res.status(500).json({ message: "Internal server error." });
+//   }
+// });
 // Define a route to get employer details
+
 app.get("/api/employer-profile", async (req, res) => {
   try {
     // Assuming you have an Employer model/schema defined
@@ -225,6 +259,333 @@ app.get("/api/employer-profile", async (req, res) => {
     };
 
     res.status(200).json(employerData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+app.get("/api/job-titles", async (req, res) => {
+  try {
+    // Fetch job titles from your database (replace with your logic)
+    const jobTitles = [
+      "Software Engineer",
+      "Product Manager",
+      "Data Scientist",
+      "Python Developer",
+      "Java Developer",
+      "Mern Stack Developer",
+      "Front End Developer",
+      "Backend Developer",
+      "Full stack Developer",
+      "UX/UI Designer",
+      "Graphic Designer",
+      "Marketing Manager",
+      "Financial Analyst",
+      "Human Resources Manager",
+      "Sales Representative",
+      "Customer Support Specialist",
+      "Project Manager",
+      "Content Writer",
+      "Social Media Manager",
+      "Business Analyst",
+      "Accountant",
+      "Nurse",
+      "Teacher",
+      "Electrical Engineer",
+      "Mechanical Engineer",
+      "Civil Engineer",
+      "Architect",
+      "Data Analyst",
+      "Cybersecurity Analyst",
+      "QA Tester (Quality Assurance Tester)",
+      "DevOps Engineer",
+      "Scrum Master",
+      "Legal Counsel",
+      "Pharmacist",
+      "Physical Therapist",
+      "Chef",
+      "Photographer",
+      "Real Estate Agent",
+      "Event Planner",
+      "Environmental Scientist",
+      "Veterinarian",
+      "Electrician",
+      "Plumber",
+      "Fashion Designer",
+      "Flight Attendant",
+      "Police Officer",
+      "Firefighter",
+      "Librarian",
+      "Biomedical Researcher",
+      "Occupational Therapist",
+      "Art Director",
+      "Data Engineer",
+      "Game Developer",
+      "UX Researcher",
+      "IT Support Specialist",
+      "Supply Chain Manager",
+      "Medical Doctor",
+      "Psychologist",
+      "Geologist",
+    ];
+
+    res.status(200).json(jobTitles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+
+app.get("/api/salary", async (req, res) => {
+  try {
+    // Fetch salary from your database
+    const salary = [
+      "2LPA",
+      "3LPA",
+      "4LPA",
+      "5LPA",
+      "6LPA",
+      "7LPA",
+      "8LPA",
+      "9LPA",
+      "10LPA",
+      "11LPA",
+      "12LPA",
+      "13LPA",
+      "14LPA",
+      "15LPA",
+      "16LPA",
+      "17LPA",
+      "18LPA",
+      "19LPA",
+      "20LPA",
+      "25LPA",
+      "30LPA",
+      "35LPA",
+      "40LPA",
+      "45LPA",
+      "50LPA",
+      "55LPA",
+      "60LPA",
+      "65LPA",
+    ];
+    res.status(200).json(salary);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+app.get("/api/CompanyName", async (req, res) => {
+  try {
+    // Fetch CompanyName from your database
+    const CompanyName = [
+      "Solix",
+      "Emagia",
+      "Touch a Life Foundation",
+      "TCS",
+      "Wipro",
+      "Capgemini",
+      "Infosys",
+      "Microsoft",
+      "Acme Inc.",
+      "TechNova",
+      "GlobalGrowth",
+      "DataSolutions",
+      "InnovateHub",
+      "SilverStream",
+      "NexaCorp",
+      "StratoWave",
+      "GreenFleet",
+      "CloudCompass",
+      "RapidSynergy",
+      "EcoFusion",
+      "Tcs",
+      "PioneerWorks",
+      "SummitSolutions",
+      "BlueHorizon",
+      "SunriseTech",
+      "StarQuest",
+      "Wipro",
+      "VivaVibe",
+      "FusionFlex",
+      "SkylineSystems",
+      "BlueWave",
+      "CoreConnect",
+      "NexTech",
+      "QuantumLeap",
+      "VistaVision",
+      "EarthMovers",
+      "Pathfinder",
+      "EnvisionTech",
+      "PrimeSolutions",
+      "ZenithX",
+      "AquaNova",
+      "ElementalTech",
+      "TruSource",
+      "FutureFleet",
+      "InfiniteReach",
+      "OptiMinds",
+      "EcoTech",
+      "StarFusion",
+      "InnovaTech",
+      "EagleEye",
+      "TechTrailblazers",
+      "SustainaSolutions",
+      "PixelPerfect",
+      "DataDynamo",
+      "MaritimeMasters",
+      "Xcelerate",
+      "NexaWave",
+      "QuasarTech",
+      "MetaMind",
+      "GreenEra",
+      "ApolloTech",
+      "InnovativeHorizon",
+      "FusionX",
+      "EcoVision",
+      "EnigmaSolutions",
+      "FleetMasters",
+      "Synergetic",
+      "DataDelight",
+      "GlobalSpectrum",
+      "QuantumTech",
+      "ElementalFusion",
+      "InfiniteLoop",
+      "RisingSun",
+      "TechPioneers",
+      "VisionaryVoyage",
+      "FusionCore",
+      "TruTech",
+      "EnviroWave",
+      "CrimsonHorizon",
+      "InnovateSustain",
+      "NexaVision",
+      "BlueStream",
+      "EcoHarbor",
+      "FutureForce",
+      "StratoTech",
+      "EagleVision",
+      "OptiTech",
+      "TechTitans",
+      "StellarSolutions",
+      "SynergySystems",
+      "GlobalNexus",
+      "InfiniteInsight",
+      "NexaFleet",
+      "QuantumLeap",
+      "StarPower",
+      "VisionCrafters",
+      "FusionQuest",
+      "EarthWonders",
+      "VistaTech",
+      "EnviroSource",
+      "DataDiscover",
+      "BlueSail",
+      "SustainableSolutions",
+      "InnovaWave",
+      "FutureFounders",
+      "TechMasters",
+      "HarborTech",
+      "NexaCore",
+      "StratoFusion",
+      "EagleInsights",
+    ];
+
+    res.status(200).json(CompanyName);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+app.get("/api/locations", async (req, res) => {
+  try {
+    // Fetch locations from your database
+    const locations = [
+      "New York",
+      "San Francisco",
+      "Los Angeles",
+      "Chicago",
+      "Miami",
+      "Boston",
+      "Seattle",
+      "Austin",
+      "Washington, D.C.",
+      "Denver",
+      "Atlanta",
+      "Dallas",
+      "Houston",
+      "Toronto",
+      "London",
+      "Paris",
+      "Berlin",
+      "Sydney",
+      "Tokyo",
+      "Beijing",
+      "Mumbai, India",
+      "Bangalore, India",
+      "New Delhi, India",
+      "Hyderabad, India",
+      "Chennai, India",
+      "Pune, India",
+      "Kolkata, India",
+      "Jaipur, India",
+      "Ahmedabad, India",
+    ];
+
+    res.status(200).json(locations);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+app.get("/api/experience-levels", async (req, res) => {
+  try {
+    // Fetch experience levels from your database
+    const experienceLevels = [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+    ];
+
+    res.status(200).json(experienceLevels);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error." });

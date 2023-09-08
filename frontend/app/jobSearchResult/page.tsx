@@ -2,10 +2,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import DeleteIcon from "@mui/icons-material/Delete";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-
 import {
   Table,
   TableBody,
@@ -69,44 +67,33 @@ const colorfulTheme = createTheme({
   },
 });
 
-const SmallButton = styled(Button)({
-  fontSize: "18px", // Adjust the text size
-  height: "35px",
-});
+// const SmallButton = styled(Button)({
+//   fontSize: "18px", // Adjust the text size
+//   height: "35px",
+// });
 
-const EmployerPage: React.FC = () => {
-  const router = useRouter();
-  const [jobPostings, setJobPostings] = useState<JobData[]>([]);
+const JobSearch: React.FC<any> = (props) => {
+  const [appliedJob, setAppliedJob] = useState<boolean>(false);
+  const { searchResults, userId } = props;
 
-  useEffect(() => {
-    fetchJobPostings();
-  }, []);
-
-  const fetchJobPostings = async () => {
+  const applyJob = async (jobId: string, userId: string) => {
     try {
-      const response = await axios.get("http://localhost:3001/api/jobs");
-      setJobPostings(response.data);
+      // Make an API call to apply for the job
+      await axios.post(`http://localhost:3001/api/apply-job/${jobId}`, {
+        userId,
+      });
+      // Update the state to indicate that the job has been applied
+      setAppliedJob(true);
+      toast.success("Application submitted successfully!", {
+        duration: 3000,
+      });
     } catch (error) {
-      console.error("Error fetching job postings:", error);
+      console.error(error);
+      toast.error("Failed to submit application. Please try again later.", {
+        duration: 3000,
+      });
     }
   };
-
-  const deleteJob = async (jobId: string) => {
-    const confirmation = window.confirm(
-      "Are you sure you want to delete this job? This action is irreversible."
-    );
-    if (confirmation) {
-      await axios.delete(`http://localhost:3001/api/jobs/${jobId}`);
-      setJobPostings((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
-      toast.success("Job deleted successfully.");
-    } else {
-      toast.error("Job deletion canceled.");
-    }
-  };
-
-  // const logout = () => {
-  //   router.push("/home");
-  // };
 
   return (
     <ThemeProvider theme={colorfulTheme}>
@@ -119,9 +106,9 @@ const EmployerPage: React.FC = () => {
             fontSize={30}
             color={"rgb(33, 150, 243)"}
           >
-            Job Postings
+            Your search results
           </Typography>
-          <FadeMenu />
+
           {/* <SmallButton
             variant="contained"
             color="primary"
@@ -140,7 +127,7 @@ const EmployerPage: React.FC = () => {
           </SmallButton> */}
         </FlexContainer>
         <TableContainer component={Paper}>
-          <StyledTable aria-label="Job Postings">
+          <StyledTable aria-label="Job Search">
             <TableHead>
               <TableRow>
                 <TableCell>Job Title</TableCell>
@@ -154,27 +141,28 @@ const EmployerPage: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {jobPostings.map((job) => (
-                <TableRow key={job._id}>
-                  <TableCell>{job.jobTitle}</TableCell>
-                  <TableCell>{job.experience}</TableCell>
-                  <TableCell>{job.location}</TableCell>
-                  <TableCell>{job.CompanyName}</TableCell>
-                  <TableCell>{job.salary}</TableCell>
-                  <TableCell>{job.workType}</TableCell>
-                  <TableCell>{job.workLocation}</TableCell>
-                  <TableCell>
-                    <Button
-                      startIcon={<DeleteIcon />}
-                      onClick={() => deleteJob(job._id)}
-                      variant="outlined"
-                      color="secondary"
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {searchResults &&
+                searchResults.length > 0 &&
+                searchResults.map((job: any) => (
+                  <TableRow key={job._id}>
+                    <TableCell>{job.jobTitle}</TableCell>
+                    <TableCell>{job.experience}</TableCell>
+                    <TableCell>{job.location}</TableCell>
+                    <TableCell>{job.CompanyName}</TableCell>
+                    <TableCell>{job.salary}</TableCell>
+                    <TableCell>{job.workType}</TableCell>
+                    <TableCell>{job.workLocation}</TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => applyJob(job._id, userId)}
+                        variant="outlined"
+                        color="secondary"
+                      >
+                        Apply
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </StyledTable>
         </TableContainer>
@@ -183,4 +171,4 @@ const EmployerPage: React.FC = () => {
   );
 };
 
-export default EmployerPage;
+export default JobSearch;

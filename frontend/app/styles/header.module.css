@@ -15,6 +15,7 @@
   width: auto;
   cursor: pointer;
   margin-top: -85px;
+  margin-bottom: 35px;
 }
 
 .buttonContainer {
@@ -23,7 +24,7 @@
   margin-top: -85px !important;
 }
 .btnEmployer_Link {
-  margin-top: 15px;
+  bottom: -16px;
 }
 .search {
   display: flex;
@@ -61,26 +62,6 @@
   cursor: pointer;
 }
 
-.icon {
-  font-size: 24px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10px;
-  color: black;
-}
-.iconbox {
-  font-size: 28px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 12px;
-  color: rgb(51, 51, 51);
-}
-.iconWrapper {
-  display: flex;
-  align-items: center;
-}
 .search_box input {
   padding-left: 55px;
   font-size: 16px;
@@ -107,19 +88,13 @@
   border-radius: 5px;
   animation: fadeOut 5s ease-in-out;
 }
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    display: none;
-  }
-}
+
 .employersLink {
   text-decoration: none;
 }
-
+.customLabel {
+  background-color: transparent !important;
+}
 /* .btnLogin,
 .btnRegister,
 .btnEmployersLogin {
@@ -137,4 +112,35 @@
 
 /* .btnRegister {
   color: rgb(240, 34, 69);
+} */
+/* .icon {
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  color: black;
+  margin-right: 10px;
+}
+.iconbox {
+  font-size: 28px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 12px;
+  color: rgb(51, 51, 51);
+  margin-right: 10px;
+}
+/* @keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+} */
+/* .iconWrapper {
+  display: flex;
+  align-items: center;
 } */

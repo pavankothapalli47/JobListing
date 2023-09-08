@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Container,
@@ -11,6 +11,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Autocomplete,
 } from "@mui/material";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
@@ -47,6 +48,12 @@ const PostButton = styled(Button)({
 });
 
 const EmployerPage = () => {
+  const [jobTitleOptions, setJobTitleOptions] = useState([]);
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [experienceOptions, setExperienceOptions] = useState([]);
+  const [salaryOptions, setSalaryOptions] = useState([]);
+  const [companyOptions, setCompanyOptions] = useState([]);
+
   const router = useRouter();
   const [jobData, setJobData] = useState({
     jobTitle: "",
@@ -57,6 +64,34 @@ const EmployerPage = () => {
     workType: "",
     workLocation: "",
   });
+  useEffect(() => {
+    // Fetch job titles
+    axios.get("http://localhost:3001/api/job-titles").then((response) => {
+      setJobTitleOptions(response.data);
+    });
+
+    // Fetch locations
+    axios.get("http://localhost:3001/api/locations").then((response) => {
+      setLocationOptions(response.data);
+    });
+
+    // Fetch salary
+    axios.get("http://localhost:3001/api/salary").then((response) => {
+      setSalaryOptions(response.data);
+    });
+
+    // Fetch CompanyName
+    axios.get("http://localhost:3001/api/CompanyName").then((response) => {
+      setCompanyOptions(response.data);
+    });
+
+    // Fetch experience levels
+    axios
+      .get("http://localhost:3001/api/experience-levels")
+      .then((response) => {
+        setExperienceOptions(response.data);
+      });
+  }, []);
 
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
@@ -86,7 +121,7 @@ const EmployerPage = () => {
         workType: "",
         workLocation: "",
       });
-      window.location.href = "/employerPage";
+      // window.location.href = "/employerPage";
     } catch (error) {
       toast.error("Error posting job!", {
         duration: 20000,
@@ -135,45 +170,101 @@ const EmployerPage = () => {
               Profile
             </Button>
           </FlexContainer>
-          <TextField
-            label="Job Title"
-            fullWidth
-            margin="normal"
-            name="jobTitle"
+          <Autocomplete
+            options={jobTitleOptions}
+            getOptionLabel={(option) => option}
             value={jobData.jobTitle}
-            onChange={handleInputChange}
+            onChange={(_, newValue) =>
+              handleInputChange({
+                target: { name: "jobTitle", value: newValue },
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Job Title"
+                fullWidth
+                margin="normal"
+                required
+              />
+            )}
           />
-          <TextField
-            label="Years of Experience"
-            fullWidth
-            margin="normal"
-            name="experience"
+          <Autocomplete
+            options={experienceOptions}
+            getOptionLabel={(option) => option.toString()}
             value={jobData.experience}
-            onChange={handleInputChange}
+            onChange={(_, newValue) =>
+              handleInputChange({
+                target: { name: "experience", value: newValue },
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Years of Experience"
+                fullWidth
+                margin="normal"
+                type="text"
+                required
+              />
+            )}
           />
-          <TextField
-            label="Location"
-            fullWidth
-            margin="normal"
-            name="location"
+          <Autocomplete
+            options={locationOptions}
+            getOptionLabel={(option) => option}
             value={jobData.location}
-            onChange={handleInputChange}
+            onChange={(_, newValue) =>
+              handleInputChange({
+                target: { name: "location", value: newValue },
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Location"
+                fullWidth
+                margin="normal"
+                required
+              />
+            )}
           />
-          <TextField
-            label="Salary"
-            fullWidth
-            margin="normal"
-            name="salary"
+          <Autocomplete
+            options={salaryOptions}
+            getOptionLabel={(option) => option}
             value={jobData.salary}
-            onChange={handleInputChange}
+            onChange={(_, newValue) =>
+              handleInputChange({
+                target: { name: "salary", value: newValue },
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Salary"
+                fullWidth
+                margin="normal"
+                required
+              />
+            )}
           />
-          <TextField
-            label="Company"
-            fullWidth
-            margin="normal"
-            name="CompanyName"
+          <Autocomplete
+            options={companyOptions}
+            getOptionLabel={(option) => option}
             value={jobData.CompanyName}
-            onChange={handleInputChange}
+            onChange={(_, newValue) =>
+              handleInputChange({
+                target: { name: "CompanyName", value: newValue },
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label=" Company Name"
+                fullWidth
+                margin="normal"
+                required
+              />
+            )}
           />
           <FormControl fullWidth margin="normal">
             <InputLabel id="demo-simple-select-label">Work Type</InputLabel>

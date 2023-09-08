@@ -2,10 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import DeleteIcon from "@mui/icons-material/Delete";
-import toast from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
-
 import {
   Table,
   TableBody,
@@ -23,7 +19,7 @@ import {
 import { styled } from "@mui/material/styles";
 import FadeMenu from "@/app/components/employerMenu";
 
-interface JobData {
+interface JobsData {
   _id: string;
   jobTitle: string;
   experience: string;
@@ -40,14 +36,15 @@ const StyledContainer = styled(Container)({
   // justifyContent: "center",
 });
 const Background = styled("body")({
-  backgroundColor: "#E1F5FE",
+  backgroundColor: "red",
 });
+
 const FlexContainer = styled(Container)({
   marginTop: "20px",
   marginBottom: "15px",
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+  justifyContent: "space-between", // Aligns the button to the right
+  alignItems: "center", // Vertically centers the button
 });
 
 const StyledTable = styled(Table)({
@@ -76,7 +73,7 @@ const SmallButton = styled(Button)({
 
 const EmployerPage: React.FC = () => {
   const router = useRouter();
-  const [jobPostings, setJobPostings] = useState<JobData[]>([]);
+  const [jobPostings, setJobPostings] = useState<JobsData[]>([]);
 
   useEffect(() => {
     fetchJobPostings();
@@ -92,15 +89,11 @@ const EmployerPage: React.FC = () => {
   };
 
   const deleteJob = async (jobId: string) => {
-    const confirmation = window.confirm(
-      "Are you sure you want to delete this job? This action is irreversible."
-    );
-    if (confirmation) {
+    try {
       await axios.delete(`http://localhost:3001/api/jobs/${jobId}`);
       setJobPostings((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
-      toast.success("Job deleted successfully.");
-    } else {
-      toast.error("Job deletion canceled.");
+    } catch (error) {
+      console.error("Error deleting job:", error);
     }
   };
 
@@ -110,7 +103,6 @@ const EmployerPage: React.FC = () => {
 
   return (
     <ThemeProvider theme={colorfulTheme}>
-      <Toaster position="top-center" reverseOrder={false} />
       <StyledContainer>
         <FlexContainer>
           <Typography
@@ -165,12 +157,11 @@ const EmployerPage: React.FC = () => {
                   <TableCell>{job.workLocation}</TableCell>
                   <TableCell>
                     <Button
-                      startIcon={<DeleteIcon />}
                       onClick={() => deleteJob(job._id)}
                       variant="outlined"
                       color="secondary"
                     >
-                      Delete
+                      Apply
                     </Button>
                   </TableCell>
                 </TableRow>

@@ -130,7 +130,7 @@ const EmployerLogin = () => {
         );
 
         if (response.status === 200) {
-          window.location.href = "/JobPosting";
+          // window.location.href = "/JobPosting";
           toast.success("Logged In Successfully!", {
             duration: 20000,
           });

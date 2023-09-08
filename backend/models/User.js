@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   password: String,
   mobileNumber: String,
   gender: String,
+  appliedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
 });
 
 module.exports = mongoose.model("User", userSchema);

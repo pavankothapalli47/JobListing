@@ -9,8 +9,11 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
+import { useRouter } from "next/navigation";
 
-export default function AccountMenu() {
+const AccountMenu: React.FC<any> = (props) => {
+  const { test } = props;
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -18,6 +21,11 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    router.push("/home");
+    console.log("handle logout");
+    test();
   };
   return (
     <React.Fragment>
@@ -85,7 +93,7 @@ export default function AccountMenu() {
           <Avatar /> My account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
@@ -94,4 +102,5 @@ export default function AccountMenu() {
       </Menu>
     </React.Fragment>
   );
-}
+};
+export default AccountMenu;

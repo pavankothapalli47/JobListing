@@ -14,17 +14,24 @@ interface EmployerData {
   email: string;
   phoneNumber: string;
   CompanyName: string;
-  // Add more fields as needed
 }
 
 const EmployerProfile: React.FC = () => {
   const [employerData, setEmployerData] = useState<EmployerData | null>(null);
-
   useEffect(() => {
+    const userIdentifier = localStorage.getItem("userIdentifier");
+
     // Fetch employer details from the backend
-    axios.get("http://localhost:3001/api/employer-profile").then((response) => {
-      setEmployerData(response.data);
-    });
+    axios
+      .get<EmployerData>(
+        `http://localhost:3001/api/employer-profile?userIdentifier=${userIdentifier}`
+      )
+      .then((response) => {
+        setEmployerData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching employer profile:", error);
+      });
   }, []);
 
   return (
