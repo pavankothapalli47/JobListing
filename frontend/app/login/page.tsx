@@ -79,7 +79,7 @@ const SocialButtons = styled("div")({
 
 const LoginForm: React.FC<any> = (props) => {
   const router = useRouter();
-  const { test } = props;
+  const { onLoginSuccess, test } = props;
 
   const session = useSession;
   const {
@@ -105,11 +105,14 @@ const LoginForm: React.FC<any> = (props) => {
 
       if (response.status === 200) {
         // successful login then to homepage
-        test();
-        router.push("/home");
+        const userId = response.data.userData._id;
         toast.success("Logged In Successfully!", {
-          duration: 3000,
+          duration: 5000,
         });
+        router.push("/home");
+        // console.log(userId);
+        test();
+        onLoginSuccess(userId);
       } else {
         toast.error("An error occurred. Please try again later.", {
           duration: 2000,

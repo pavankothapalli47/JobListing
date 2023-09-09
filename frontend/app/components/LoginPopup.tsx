@@ -19,7 +19,7 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const LoginPopup: React.FC<any> = (props) => {
-  const { test } = props;
+  const { test, onLoginSuccess } = props;
   // console.log(test);
   const [open, setOpen] = useState(false);
 
@@ -31,6 +31,11 @@ const LoginPopup: React.FC<any> = (props) => {
     setOpen(false);
   };
 
+  const handleLoginSuccess = (userId: string) => {
+    // Call the onLogin callback to pass the userId up to the parent component
+    console.log("Received user ID:", userId);
+    onLoginSuccess(userId);
+  };
   return (
     <>
       <Button onClick={handleClickOpen}>Login</Button>
@@ -49,7 +54,7 @@ const LoginPopup: React.FC<any> = (props) => {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <LoginForm test={test} />
+          <LoginForm test={test} onLoginSuccess={handleLoginSuccess} />
         </DialogContent>
       </StyledDialog>
     </>

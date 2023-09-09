@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -9,24 +9,56 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
+import axios from "axios";
+import UserDetailsDialog from "../userProfile/page";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const AccountMenu: React.FC<any> = (props) => {
-  const { test } = props;
-  const router = useRouter();
+  const { test, userId } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const [userData, setUserData] = useState<any>(null);
+  const [showUserDetailsDialog, setShowUserDetailsDialog] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/api/user/${userId}`)
+      .then((response) => {
+        // Handle successful response
+        console.log("Response data:", response.data);
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          // Handle 404 error (resource not found)
+          console.error("Resource not found:", error.response.data);
+        } else {
+          // Handle other errors
+          console.error("An error occurred:", error.message);
+        }
+      });
+  }, [userId]);
+
+  const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleLogout = () => {
-    router.push("/home");
-    console.log("handle logout");
+    // Handle logout logic
     test();
+    handleClose();
+    window.location.href = "/home";
   };
+  const handleMyAccountClick = () => {
+    setShowUserDetailsDialog(true);
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <Box>
@@ -39,18 +71,19 @@ const AccountMenu: React.FC<any> = (props) => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar
+            <AccountCircleIcon
               sx={{
                 width: 32,
                 height: 32,
                 marginTop: 1.1,
-                backgroundColor: "rgb(25, 118, 210)",
+                // backgroundColor: "rgb(25, 118, 210)",
+                color: "rgb(25, 118, 210)",
                 marginRight: "10px",
                 marginLeft: "-10px",
               }}
             >
-              P
-            </Avatar>
+              {userData && userData.username ? userData.username.charAt(0) : ""}
+            </AccountCircleIcon>
           </IconButton>
         </Tooltip>
       </Box>
@@ -59,7 +92,6 @@ const AccountMenu: React.FC<any> = (props) => {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -89,7 +121,7 @@ const AccountMenu: React.FC<any> = (props) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleMyAccountClick}>
           <Avatar /> My account
         </MenuItem>
         <Divider />
@@ -100,7 +132,15 @@ const AccountMenu: React.FC<any> = (props) => {
           Logout
         </MenuItem>
       </Menu>
+      {userData && (
+        <UserDetailsDialog
+          userData={userData}
+          onClose={() => setShowUserDetailsDialog(false)}
+          open={showUserDetailsDialog}
+        />
+      )}
     </React.Fragment>
   );
 };
+
 export default AccountMenu;

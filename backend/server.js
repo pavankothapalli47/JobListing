@@ -99,6 +99,33 @@ app.post("/api/apply-job/:jobId", async (req, res) => {
     res.status(500).json({ message: "Internal server error." });
   }
 });
+// Define a route to get user profile by ID
+app.get("/api/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Assuming you have a User model/schema defined
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Customize the user data you want to return
+    const userData = {
+      fullName: user.fullName,
+      email: user.email,
+      mobileNumber: user.mobileNumber,
+      gender: user.gender,
+      // Add other user properties as needed
+    };
+
+    res.status(200).json(userData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
 
 // Login route for users
 app.post("/api/login", async (req, res) => {

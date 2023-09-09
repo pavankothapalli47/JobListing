@@ -34,6 +34,7 @@ const Header = () => {
   const [experienceOptions, setExperienceOptions] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     // Fetch job titles
@@ -86,6 +87,10 @@ const Header = () => {
         setIsLoading(false);
       });
   };
+
+  const updateUserId = (newUserId: string | null) => {
+    setUserId(newUserId);
+  };
   // console.log(
   //   "hello {searchResults && searchResults.length > 0",
   //   searchResults
@@ -100,7 +105,11 @@ const Header = () => {
           </a>
           <div className={styles.buttonContainer}>
             <p className={styles.btnLogin}>
-              {isLoggedIn ? <LoginPopup test={testHandler} /> : ""}
+              {isLoggedIn ? (
+                <LoginPopup test={testHandler} onLoginSuccess={updateUserId} />
+              ) : (
+                ""
+              )}
             </p>
             <p className={styles.btnRegister}>
               {isLoggedIn ? <RegistrationPopup test={testHandler} /> : ""}
@@ -114,7 +123,7 @@ const Header = () => {
             ) : (
               ""
             )}
-            {!isLoggedIn && <AccountMenu test={testHandler} />}
+            {!isLoggedIn && <AccountMenu test={testHandler} userId={userId} />}
           </div>
         </div>
         <div className={styles.search}>
@@ -220,7 +229,7 @@ const Header = () => {
         )}
       </div>
       {searchResults && searchResults.length > 0 && (
-        <JobSearch searchResults={searchResults} />
+        <JobSearch searchResults={searchResults} userId={userId} />
       )}
       <SliderSection />
     </>

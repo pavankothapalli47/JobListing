@@ -121,7 +121,7 @@ const EmployerPage = () => {
         workType: "",
         workLocation: "",
       });
-      // window.location.href = "/employerPage";
+      window.location.href = "/employerPage";
     } catch (error) {
       toast.error("Error posting job!", {
         duration: 20000,
