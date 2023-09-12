@@ -63,11 +63,14 @@ const EmployerPage = () => {
     CompanyName: "",
     workType: "",
     workLocation: "",
+    createdBy: "",
   });
   useEffect(() => {
     // Fetch job titles
     axios.get("http://localhost:3001/api/job-titles").then((response) => {
       setJobTitleOptions(response.data);
+      const employerId = localStorage.getItem("authUser");
+      console.log("Employer ID:", employerId);
     });
 
     // Fetch locations
@@ -103,6 +106,8 @@ const EmployerPage = () => {
 
   const handleSubmit = async () => {
     try {
+      const employerId = localStorage.getItem("authUser") || "";
+      jobData.createdBy = employerId;
       const response = await axios.post(
         "http://localhost:3001/api/jobs",
         jobData
@@ -120,6 +125,7 @@ const EmployerPage = () => {
         CompanyName: "",
         workType: "",
         workLocation: "",
+        createdBy: employerId || "",
       });
       window.location.href = "/employerPage";
     } catch (error) {

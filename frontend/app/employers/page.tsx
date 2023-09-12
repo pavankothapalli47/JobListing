@@ -82,7 +82,6 @@ const EmployerLogin = () => {
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [employerId, setEmployerId] = useState<string | null>(null);
   const [lottieAnimation, setLottieAnimation] = useState<AnimationData>(
     showRegistration ? job6 : job5
   );
@@ -109,7 +108,7 @@ const EmployerLogin = () => {
         );
 
         if (response.status === 200) {
-          window.location.href = "/JobPosting";
+          window.location.href = "/employers";
           toast.success("Registered Successfully!", {
             duration: 20000,
           });
@@ -133,7 +132,9 @@ const EmployerLogin = () => {
         if (response.status === 200) {
           window.location.href = "/JobPosting";
           const EmployerId = response.data.employerData._id;
-          setEmployerId(EmployerId);
+          console.log(EmployerId);
+          localStorage.setItem("authUser", EmployerId);
+          // setEmployerId(EmployerId);
           toast.success("Logged In Successfully!", {
             duration: 20000,
           });

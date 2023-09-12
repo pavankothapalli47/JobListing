@@ -22,8 +22,8 @@ const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({
       <DialogContent>
         <p>FullName: {userData.fullName}</p>
         <p>Email: {userData.email}</p>
-        <p>MobileNumber:{userData.mobileNumber}</p>
-        <p>Gender:{userData.gender}</p>
+        <p>MobileNumber: {userData.mobileNumber}</p>
+        <p>Gender: {userData.gender}</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Close</Button>

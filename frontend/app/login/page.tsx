@@ -162,9 +162,9 @@ const LoginForm: React.FC<any> = (props) => {
         >
           Log In
         </LoginButton>
-        <LoginViaOtpButton onClick={handleLoginViaOtp}>
+        {/* <LoginViaOtpButton onClick={handleLoginViaOtp}>
           Log in via OTP
-        </LoginViaOtpButton>
+        </LoginViaOtpButton> */}
         <SocialButtons>
           <IconButton>
             <FcGoogle onClick={() => signIn("google")} />

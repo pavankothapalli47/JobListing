@@ -32,6 +32,7 @@ interface JobData {
   CompanyName: string;
   workType: string;
   workLocation: string;
+  createdBy: string;
 }
 
 const StyledContainer = styled(Container)({
@@ -41,6 +42,7 @@ const StyledContainer = styled(Container)({
 });
 const Background = styled("body")({
   backgroundColor: "#E1F5FE",
+  minHeight: "100vh",
 });
 const FlexContainer = styled(Container)({
   marginTop: "20px",
@@ -80,6 +82,7 @@ const EmployerPage: React.FC = () => {
 
   useEffect(() => {
     fetchJobPostings();
+    console.log(localStorage.getItem("authUser"));
   }, []);
 
   const fetchJobPostings = async () => {
@@ -139,7 +142,7 @@ const EmployerPage: React.FC = () => {
             Logout
           </SmallButton> */}
         </FlexContainer>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{ background: "#E1F5FE" }}>
           <StyledTable aria-label="Job Postings">
             <TableHead>
               <TableRow>
@@ -164,14 +167,26 @@ const EmployerPage: React.FC = () => {
                   <TableCell>{job.workType}</TableCell>
                   <TableCell>{job.workLocation}</TableCell>
                   <TableCell>
-                    <Button
-                      startIcon={<DeleteIcon />}
-                      onClick={() => deleteJob(job._id)}
-                      variant="outlined"
-                      color="secondary"
-                    >
-                      Delete
-                    </Button>
+                    <>
+                      {" "}
+                      {console.log(
+                        localStorage.getItem("authUser"),
+                        "job.createdBy",
+                        job.createdBy
+                      )}
+                    </>
+                    {job.createdBy == localStorage.getItem("authUser") ? (
+                      <Button
+                        startIcon={<DeleteIcon />}
+                        onClick={() => deleteJob(job._id)}
+                        variant="outlined"
+                        color="secondary"
+                      >
+                        Delete
+                      </Button>
+                    ) : (
+                      ""
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

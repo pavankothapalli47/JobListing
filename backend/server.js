@@ -196,7 +196,7 @@ app.post("/api/jobs", async (req, res) => {
     CompanyName,
     workType,
     workLocation,
-    createdby,
+    createdBy,
   } = req.body;
   try {
     if (!jobTitle || !experience || !location) {
@@ -210,6 +210,7 @@ app.post("/api/jobs", async (req, res) => {
       CompanyName,
       workType,
       workLocation,
+      createdBy,
     });
 
     await newJob.save();

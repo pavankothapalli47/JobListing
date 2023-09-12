@@ -9,7 +9,7 @@ const jobSchema = new mongoose.Schema(
     CompanyName: String,
     workType: String,
     workLocation: String,
-    createdby: mongoose.Schema.Types.ObjectId,
+    createdBy: mongoose.Schema.Types.ObjectId,
   },
   { timestamps: true }
 );

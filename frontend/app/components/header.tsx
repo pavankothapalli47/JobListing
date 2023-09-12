@@ -21,6 +21,8 @@ import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
 import JobSearch from "../jobSearchResult/page";
 import SliderSection from "./sliderSection";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const Header = () => {
   const router = useRouter();
@@ -75,7 +77,11 @@ const Header = () => {
         if (response.status === 200) {
           // Update the search results
           setSearchResults(response.data);
-          console.log("hellorES", response.data);
+          // console.log("hellorES", response.data);
+          if (response.data.length === 0) {
+            // Display an error toast message when no search results are found
+            toast.error("No search results found.");
+          }
         }
       })
       .catch((error) => {
@@ -95,9 +101,9 @@ const Header = () => {
   //   "hello {searchResults && searchResults.length > 0",
   //   searchResults
   // );
-
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className={styles.headerMain}>
         <div className={styles.headerSpace}>
           <a href="/">

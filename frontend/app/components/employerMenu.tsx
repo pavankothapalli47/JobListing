@@ -16,6 +16,7 @@ export default function FadeMenu() {
     setAnchorEl(null);
   };
   const logout = () => {
+    localStorage.removeItem("authUser");
     router.push("/home");
   };
   const handleProfile = () => {

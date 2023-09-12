@@ -19,7 +19,7 @@ interface EmployerData {
 const EmployerProfile: React.FC = () => {
   const [employerData, setEmployerData] = useState<EmployerData | null>(null);
   useEffect(() => {
-    const userIdentifier = localStorage.getItem("userIdentifier");
+    const userIdentifier = localStorage.getItem("authUser");
 
     // Fetch employer details from the backend
     axios
