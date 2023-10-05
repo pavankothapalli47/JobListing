@@ -3,7 +3,8 @@
 
 A modern job listing website built with Next.js, Node.js, and MongoDB.
 
-![Project Image]! [JobListing](https://github.com/pavankothapalli47/JobListing/assets/99778112/48500878-79f3-44dd-a30a-68972c298f98)
+![Project Image]! [JobListing]
+(https://github.com/pavankothapalli47/JobListing/assets/99778112/48500878-79f3-44dd-a30a-68972c298f98)
 
 ## Table of Contents
 
