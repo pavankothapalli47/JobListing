@@ -108,6 +108,10 @@ const RegistrationForm: React.FC = () => {
         toast.success("Registered Successfully!", {
           duration: 2000,
         });
+      } else if (response.status === 400) {
+        toast.error("Email address is already registered. Kindly LogIn to access your account.", {
+          duration: 2000,
+        });
       } else {
         toast.error("Registration error!", {
           duration: 2000,

@@ -80,16 +80,16 @@ const JobSearch: React.FC<any> = (props) => {
 
   const applyJob = async (jobId: string, userId: string) => {
     try {
-      // Make an API call to apply for the job
+      // Making an API call to apply for job
       const response = await axios.post(
         `http://localhost:3001/api/apply-job/${jobId}`,
         {
           userId,
         }
       );
-
+  
       if (response.status === 200) {
-        // Update the state to indicate that the job has been applied
+        // Updating the state to indicate that the job has been applied
         setAppliedJob(true);
         toast.success("Application submitted successfully!", {
           duration: 3000,
@@ -99,13 +99,29 @@ const JobSearch: React.FC<any> = (props) => {
           duration: 3000,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error("Failed to submit application. Please try again later.", {
-        duration: 3000,
-      });
+  
+      if (error.response && error.response.status === 404) {
+        // Displaying warning toaster for user to log in before applying
+           toast.error("Please log in before submitting your job application.", {
+          duration: 3000,
+          icon: '⚠️',
+          style: {
+            border: '1px solid #FF9800',
+            padding: '10px',
+            color: '#FF9800',
+          },
+        });
+      } else {
+        // Displaying error toaster for other errors
+        toast.error("Failed to submit application. Please try again later.", {
+          duration: 3000,
+        });
+      }
     }
   };
+  
 
   return (
     <ThemeProvider theme={colorfulTheme}>
