@@ -15,6 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="Logochrome.png" />
+      </head>
       <body
         className={inter.className}
         style={{ margin: 0, overflowX: "hidden" }}
