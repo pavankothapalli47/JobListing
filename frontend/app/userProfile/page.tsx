@@ -6,25 +6,34 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
 interface UserDetailsDialogProps {
-  userData: any;
-  onClose: () => void;
+  userData: {
+    username: string;
+    fullName: string;
+    email: string;
+    mobileNumber: string;
+    gender: string;
+  };
   open: boolean;
+  onClose: () => void ;
 }
+
 const UserDetailsDialog: React.FC<UserDetailsDialogProps> = ({
   userData,
   onClose,
   open,
 }) => {
-  console.log("userData:", userData);
+  console.log("userData:", userData , onClose);
+  console.log("userData:type", typeof userData);
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>User Details</DialogTitle>
       <DialogContent>
-        <p>FullName: {userData.fullName}</p>
-        <p>Email: {userData.email}</p>
-        <p>MobileNumber: {userData.mobileNumber}</p>
-        <p>Gender: {userData.gender}</p>
+        <p>FullName: {userData?.fullName}</p>
+        <p>Email: {userData?.email}</p>
+        <p>MobileNumber: {userData?.mobileNumber}</p>
+        <p>Gender: {userData?.gender}</p>
       </DialogContent>
+
       <DialogActions>
         <Button onClick={onClose}>Close</Button>
       </DialogActions>
