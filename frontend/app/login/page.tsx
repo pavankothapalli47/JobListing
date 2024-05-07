@@ -98,7 +98,7 @@ const LoginForm: React.FC<any> = (props) => {
     setErrorMessage(""); // Clearing the previous error messages
     try {
       // Sending email/phone and password to the backend for verification
-      const response = await axios.post("http://localhost:3001/api/login", {
+      const response = await axios.post("https://joblisting-4tpk.onrender.com/api/login", {
         emailOrPhone: data.emailOrPhone,
         password: data.password,
       });

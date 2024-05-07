@@ -100,7 +100,7 @@ const RegistrationForm: React.FC = () => {
     try {
       // Sending registration data to the backend for processing
       const response = await axios.post(
-        "http://localhost:3001/api/register",
+        "https://joblisting-4tpk.onrender.com/api/register",
         data
       );
       if (response.status === 200) {

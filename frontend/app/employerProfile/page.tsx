@@ -24,7 +24,7 @@ const EmployerProfile: React.FC = () => {
     // Fetch employer details from the backend
     axios
       .get<EmployerData>(
-        `http://localhost:3001/api/employer-profile?userIdentifier=${userIdentifier}`
+        `https://joblisting-4tpk.onrender.com/api/employer-profile?userIdentifier=${userIdentifier}`
       )
       .then((response) => {
         setEmployerData(response.data);

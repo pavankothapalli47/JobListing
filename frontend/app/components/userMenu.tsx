@@ -23,7 +23,7 @@ const AccountMenu: React.FC<any> = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/user/${userId}`)
+      .get(`https://joblisting-4tpk.onrender.com/api/user/${userId}`)
       .then((response) => {
         // Handle successful response
         console.log("Response data:", response.data);

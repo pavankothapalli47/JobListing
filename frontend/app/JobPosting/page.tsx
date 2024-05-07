@@ -67,30 +67,30 @@ const EmployerPage = () => {
   });
   useEffect(() => {
     // Fetch job titles
-    axios.get("http://localhost:3001/api/job-titles").then((response) => {
+    axios.get("https://joblisting-4tpk.onrender.com/api/job-titles").then((response) => {
       setJobTitleOptions(response.data);
       const employerId = localStorage.getItem("authUser");
       console.log("Employer ID:", employerId);
     });
 
     // Fetch locations
-    axios.get("http://localhost:3001/api/locations").then((response) => {
+    axios.get("https://joblisting-4tpk.onrender.com/api/locations").then((response) => {
       setLocationOptions(response.data);
     });
 
     // Fetch salary
-    axios.get("http://localhost:3001/api/salary").then((response) => {
+    axios.get("https://joblisting-4tpk.onrender.com/api/salary").then((response) => {
       setSalaryOptions(response.data);
     });
 
     // Fetch CompanyName
-    axios.get("http://localhost:3001/api/CompanyName").then((response) => {
+    axios.get("https://joblisting-4tpk.onrender.com/api/CompanyName").then((response) => {
       setCompanyOptions(response.data);
     });
 
     // Fetch experience levels
     axios
-      .get("http://localhost:3001/api/experience-levels")
+      .get("https://joblisting-4tpk.onrender.com/api/experience-levels")
       .then((response) => {
         setExperienceOptions(response.data);
       });
@@ -109,7 +109,7 @@ const EmployerPage = () => {
       const employerId = localStorage.getItem("authUser") || "";
       jobData.createdBy = employerId;
       const response = await axios.post(
-        "http://localhost:3001/api/jobs",
+        "https://joblisting-4tpk.onrender.com/api/jobs",
         jobData
       );
       toast.success("Job posted Successfully!", {

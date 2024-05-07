@@ -22,14 +22,22 @@ export default function FadeMenu() {
   const handleProfile = () => {
     router.push("/employerProfile");
   };
+  
+  // Responsive styles
+  const buttonStyle = {
+    minWidth: 100,
+    marginRight: 10,
+  };
+  
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        style={buttonStyle}
       >
         Dashboard
       </Button>

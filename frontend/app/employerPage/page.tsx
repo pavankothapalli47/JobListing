@@ -87,7 +87,7 @@ const EmployerPage: React.FC = () => {
 
   const fetchJobPostings = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/jobs");
+      const response = await axios.get("https://joblisting-4tpk.onrender.com/api/jobs");
       setJobPostings(response.data);
     } catch (error) {
       console.error("Error fetching job postings:", error);
@@ -99,7 +99,7 @@ const EmployerPage: React.FC = () => {
       "Are you sure you want to delete this job? This action is irreversible."
     );
     if (confirmation) {
-      await axios.delete(`http://localhost:3001/api/jobs/${jobId}`);
+      await axios.delete(`https://joblisting-4tpk.onrender.com/api/jobs/${jobId}`);
       setJobPostings((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
       toast.success("Job deleted successfully.");
     } else {

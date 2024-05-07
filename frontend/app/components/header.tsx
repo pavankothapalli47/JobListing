@@ -40,18 +40,18 @@ const Header = () => {
 
   useEffect(() => {
     // Fetch job titles
-    axios.get("http://localhost:3001/api/job-titles").then((response) => {
+    axios.get("https://joblisting-4tpk.onrender.com/api/job-titles").then((response) => {
       setJobTitleOptions(response.data);
     });
 
     // Fetch locations
-    axios.get("http://localhost:3001/api/locations").then((response) => {
+    axios.get("https://joblisting-4tpk.onrender.com/api/locations").then((response) => {
       setLocationOptions(response.data);
     });
 
     // Fetch experience levels
     axios
-      .get("http://localhost:3001/api/experience-levels")
+      .get("https://joblisting-4tpk.onrender.com/api/experience-levels")
       .then((response) => {
         setExperienceOptions(response.data);
       });
@@ -72,7 +72,7 @@ const Header = () => {
     setIsLoading(true);
 
     axios
-      .post("http://localhost:3001/api/jobs/search", searchData)
+      .post("https://joblisting-4tpk.onrender.com/api/jobs/search", searchData)
       .then((response) => {
         if (response.status === 200) {
           // Update the search results

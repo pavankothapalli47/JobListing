@@ -18,7 +18,7 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled } from "@mui/system";
 
 type AnimationData = {
   v: string;
@@ -26,14 +26,59 @@ type AnimationData = {
   ip: number;
 };
 
-const FormContainer = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
+const RootContainer = styled('div')({
+  margin: 0,
+  padding: 0,
+  backgroundColor: "rgb(236, 235, 235 )",
+});
+
+const MainContainer = styled(Container)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  height: "100vh",
+  padding: "0 50px",
+});
+
+const LottieContainer = styled('div')({
+  marginRight: "80px",
+  height: "500px",
+  width: "600px",
+  marginLeft: "-400px",
+});
+
+const FormContainer = styled(Paper)({
+  padding: "20px",
   display: "flex",
   flexDirection: "column",
+  marginTop: "10px",
   alignItems: "center",
-  marginTop: theme.spacing(2),
-  marginLeft: theme.spacing(3),
-}));
+  marginLeft: "30px",
+});
+
+const StyledTextField = styled(TextField)({
+  width: "350px",
+  height: "100%",
+});
+
+const StyledButton = styled(Button)({
+  marginTop: "15px",
+  marginBottom: "20px",
+  height: "40px",
+  backgroundColor: "rgb(211, 178, 235)",
+  "&:hover": {
+    backgroundColor: "rgb(159, 76, 219)",
+  },
+});
+
+const StyledLink = styled(Link)({
+  color: "rgb(159, 76, 219)",
+  textDecoration: "none",
+  transition: "color 0.3s ease",
+  "&:hover, &:active": {
+    color: "rgb(159, 76, 219)",
+  },
+});
 
 const EmployerLogin = () => {
   const [showRegistration, setShowRegistration] = useState(false);
@@ -56,7 +101,7 @@ const EmployerLogin = () => {
       // Performing registration logic and send data to backend
       try {
         const response = await axios.post(
-          "http://localhost:3001/api/registeremployers",
+          "https://joblisting-4tpk.onrender.com/api/registeremployers",
           {
             fullName,
             email,
@@ -81,7 +126,7 @@ const EmployerLogin = () => {
       // Perform login logic and check registered data
       try {
         const response = await axios.post(
-          "http://localhost:3001/api/loginemployers",
+          "https://joblisting-4tpk.onrender.com/api/loginemployers",
           {
             email,
             password,
@@ -93,15 +138,12 @@ const EmployerLogin = () => {
           const EmployerId = response.data.employerData._id;
           console.log(EmployerId);
           localStorage.setItem("authUser", EmployerId);
-          // setEmployerId(EmployerId);
           toast.success("Logged In Successfully!", {
             duration: 20000,
           });
         }
       } catch (error) {
-        // toast.error("Invalid Credentials!", {
-        //   duration: 2000,
-        // });
+        toast.error("Invalid credentials.")
         console.error("Login error:", error);
       }
     }
@@ -113,25 +155,24 @@ const EmployerLogin = () => {
   };
 
   return (
-    <div className="body">
+    <RootContainer>
       <Toaster position="top-center" reverseOrder={false} />
-      <Container component="main" maxWidth="xs" className="root">
-        <div className="lottieContainer">
+      <MainContainer maxWidth="xs">
+        <LottieContainer>
           <Lottie
             animationData={lottieAnimation}
             style={{
               height: "500px",
               width: "600px",
-              // marginLeft: "-400px",
             }}
           />
-        </div>
-        <FormContainer elevation={3} className="formContainer">
+        </LottieContainer>
+        <FormContainer elevation={3}>
           <Typography component="h1" variant="h5">
             {showRegistration ? "Employer Registration" : "Employer Login"}
           </Typography>
-          <form className="form" onSubmit={onSubmit}>
-            <TextField
+          <form onSubmit={onSubmit}>
+            <StyledTextField
               variant="outlined"
               margin="normal"
               fullWidth
@@ -139,16 +180,13 @@ const EmployerLogin = () => {
               id="email"
               label="Email Address/Phone Number"
               autoComplete="email"
-              value={email} // Bind value to state
-              onChange={(e: any) => setEmail(e.target.value)} // Update state on change
-              //        {/* // {...register("email")}
-              // // error={!!formState.errors.email}
-              // // helperText={formState.errors.email?.message} */}
+              value={email}
+              onChange={(e: any) => setEmail(e.target.value)}
             />
 
             {showRegistration && (
               <div>
-                <TextField
+                <StyledTextField
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -157,11 +195,8 @@ const EmployerLogin = () => {
                   type="tel"
                   id="fullName"
                   autoComplete="Name"
-                  // {...register("name")}
-                  // error={!!formState.errors.name}
-                  // helperText={formState.errors.name?.message}
                 />
-                <TextField
+                <StyledTextField
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -170,11 +205,8 @@ const EmployerLogin = () => {
                   type="tel"
                   id="phoneNumber"
                   autoComplete="tel"
-                  // {...register("phoneNumber")}
-                  // error={!!formState.errors.phoneNumber}
-                  // helperText={formState.errors.phoneNumber?.message}
                 />
-                <TextField
+                <StyledTextField
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -185,13 +217,10 @@ const EmployerLogin = () => {
                   autoComplete="tel"
                   value={companyName}
                   onChange={(e: any) => setCompanyName(e.target.value)}
-                  // {...register("companyName")}
-                  // error={!!formState.errors.companyName}
-                  // helperText={formState.errors.companyName?.message}
                 />
               </div>
             )}
-            <TextField
+            <StyledTextField
               variant="outlined"
               margin="normal"
               fullWidth
@@ -204,27 +233,25 @@ const EmployerLogin = () => {
               value={password}
               onChange={(e: any) => setPassword(e.target.value)}
             />
-            <Button
+            <StyledButton
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className="submit"
             >
               {showRegistration ? "Register" : "Log In"}
-            </Button>
+            </StyledButton>
           </form>
           {!showRegistration && (
             <>
-              <Link href="#" variant="body2" className="link">
+              <StyledLink href="#" variant="body2">
                 Forgot Password?
-              </Link>
+              </StyledLink>
               <Typography variant="body2">
                 Don't have an account?{" "}
-                <Link
+                <StyledLink
                   href="#"
                   variant="body2"
-                  className="link"
                   onClick={() => {
                     handleAnimationChange();
                     setShowRegistration(true);
@@ -232,7 +259,7 @@ const EmployerLogin = () => {
                   }}
                 >
                   Register
-                </Link>
+                </StyledLink>
               </Typography>
             </>
           )}
@@ -240,10 +267,9 @@ const EmployerLogin = () => {
             <>
               <Typography variant="body2">
                 Already have an account?{" "}
-                <Link
+                <StyledLink
                   href="#"
                   variant="body2"
-                  className="link"
                   onClick={() => {
                     handleAnimationChange();
                     setShowLoginLink(true);
@@ -251,13 +277,13 @@ const EmployerLogin = () => {
                   }}
                 >
                   Login
-                </Link>
+                </StyledLink>
               </Typography>
             </>
           )}
         </FormContainer>
-      </Container>
-    </div>
+      </MainContainer>
+    </RootContainer>
   );
 };
 

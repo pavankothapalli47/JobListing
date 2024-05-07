@@ -14,7 +14,7 @@ export default function LoginForm() {
     setErrorMessage(""); // Clearing the previous error messages
     try {
       // Sending email/phone and password to the backend for verification
-      const response = await axios.post("http://localhost:3001/api/login", {
+      const response = await axios.post("https://joblisting-4tpk.onrender.com/api/login", {
         emailOrPhone,
         password,
       });

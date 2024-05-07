@@ -82,7 +82,7 @@ const JobSearch: React.FC<any> = (props) => {
     try {
       // Making an API call to apply for job
       const response = await axios.post(
-        `http://localhost:3001/api/apply-job/${jobId}`,
+        `https://joblisting-4tpk.onrender.com/api/apply-job/${jobId}`,
         {
           userId,
         }
