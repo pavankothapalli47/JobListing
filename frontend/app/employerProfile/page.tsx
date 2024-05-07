@@ -43,14 +43,14 @@ const EmployerProfile: React.FC = () => {
         {employerData ? (
           <div>
             <Typography variant="body1">
-              Full Name: {employerData.fullName}
+              Full Name: {employerData?.fullName}
             </Typography>
-            <Typography variant="body1">Email: {employerData.email}</Typography>
+            <Typography variant="body1">Email: {employerData?.email}</Typography>
             <Typography variant="body1">
-              Phone Number: {employerData.phoneNumber}
+              Phone Number: {employerData?.phoneNumber}
             </Typography>
             <Typography variant="body1">
-              Company Name: {employerData.CompanyName}
+              Company Name: {employerData?.CompanyName}
             </Typography>
           </div>
         ) : (

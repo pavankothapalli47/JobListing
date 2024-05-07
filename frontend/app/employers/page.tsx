@@ -18,65 +18,24 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { styled } from "@mui/material/styles";
 
 type AnimationData = {
   v: string;
   fr: number;
   ip: number;
 };
-const useStyles = makeStyles((theme: any) => ({
-  body: {
-    margin: 0,
-    padding: 0,
-    backgroundColor: "rgb(236, 235, 235 )",
-  },
-  root: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: "100vh",
-    padding: "0 50px",
-  },
-  lottieContainer: {
-    marginRight: "80px",
-    height: "500px",
-    width: "600px",
-    marginLeft: "-400px",
-  },
-  formContainer: {
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    marginTop: "10px",
-    alignItems: "center",
-    marginLeft: "30px",
-  },
-  form: {
-    width: "350px",
-    height: "100%",
-  },
-  submit: {
-    marginTop: "15px",
-    marginBottom: "20px",
-    height: "40px",
-    backgroundColor: "rgb(211, 178, 235)",
-    "&:hover": {
-      backgroundColor: "rgb(159, 76, 219)",
-    },
-  },
-  link: {
-    color: "rgb(159, 76, 219)",
-    textDecoration: "none",
-    transition: "color 0.3s ease",
-    "&:hover, &:active": {
-      color: "rgb(159, 76, 219)",
-    },
-  },
+
+const FormContainer = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(3),
 }));
 
 const EmployerLogin = () => {
-  const classes: any = useStyles();
   const [showRegistration, setShowRegistration] = useState(false);
   const [showLoginLink, setShowLoginLink] = useState(true);
   const [companyName, setCompanyName] = useState("");
@@ -154,10 +113,10 @@ const EmployerLogin = () => {
   };
 
   return (
-    <div className={classes.body}>
+    <div className="body">
       <Toaster position="top-center" reverseOrder={false} />
-      <Container component="main" maxWidth="xs" className={classes.root}>
-        <div className={classes.lottieContainer}>
+      <Container component="main" maxWidth="xs" className="root">
+        <div className="lottieContainer">
           <Lottie
             animationData={lottieAnimation}
             style={{
@@ -167,11 +126,11 @@ const EmployerLogin = () => {
             }}
           />
         </div>
-        <Paper elevation={3} className={classes.formContainer}>
+        <FormContainer elevation={3} className="formContainer">
           <Typography component="h1" variant="h5">
             {showRegistration ? "Employer Registration" : "Employer Login"}
           </Typography>
-          <form className={classes.form} onSubmit={onSubmit}>
+          <form className="form" onSubmit={onSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -250,14 +209,14 @@ const EmployerLogin = () => {
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              className="submit"
             >
               {showRegistration ? "Register" : "Log In"}
             </Button>
           </form>
           {!showRegistration && (
             <>
-              <Link href="#" variant="body2" className={classes.link}>
+              <Link href="#" variant="body2" className="link">
                 Forgot Password?
               </Link>
               <Typography variant="body2">
@@ -265,7 +224,7 @@ const EmployerLogin = () => {
                 <Link
                   href="#"
                   variant="body2"
-                  className={classes.link}
+                  className="link"
                   onClick={() => {
                     handleAnimationChange();
                     setShowRegistration(true);
@@ -284,7 +243,7 @@ const EmployerLogin = () => {
                 <Link
                   href="#"
                   variant="body2"
-                  className={classes.link}
+                  className="link"
                   onClick={() => {
                     handleAnimationChange();
                     setShowLoginLink(true);
@@ -296,7 +255,7 @@ const EmployerLogin = () => {
               </Typography>
             </>
           )}
-        </Paper>
+        </FormContainer>
       </Container>
     </div>
   );

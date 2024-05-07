@@ -20,17 +20,17 @@ const JobCard: React.FC<JobCardProps> = ({ jobData }) => {
     <Card variant="outlined" sx={{ marginBottom: 2 }}>
       <CardContent>
         <Typography variant="h5" gutterBottom>
-          {jobData.jobTitle}
+          {jobData?.jobTitle}
         </Typography>
         <Typography variant="body1">
-          Experience: {jobData.experience}
+          Experience: {jobData?.experience}
         </Typography>
-        <Typography variant="body1">Location: {jobData.location}</Typography>
-        <Typography variant="body1">Salary: {jobData.salary}</Typography>
-        <Typography variant="body1">Industry: {jobData.industry}</Typography>
-        <Typography variant="body1">Work Type: {jobData.workType}</Typography>
+        <Typography variant="body1">Location: {jobData?.location}</Typography>
+        <Typography variant="body1">Salary: {jobData?.salary}</Typography>
+        <Typography variant="body1">Industry: {jobData?.industry}</Typography>
+        <Typography variant="body1">Work Type: {jobData?.workType}</Typography>
         <Typography variant="body1">
-          Work Location: {jobData.workLocation}
+          Work Location: {jobData?.workLocation}
         </Typography>
       </CardContent>
     </Card>

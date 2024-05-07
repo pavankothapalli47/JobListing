@@ -159,13 +159,13 @@ const EmployerPage: React.FC = () => {
             <TableBody>
               {jobPostings.map((job) => (
                 <TableRow key={job._id}>
-                  <TableCell>{job.jobTitle}</TableCell>
-                  <TableCell>{job.experience}</TableCell>
-                  <TableCell>{job.location}</TableCell>
-                  <TableCell>{job.CompanyName}</TableCell>
-                  <TableCell>{job.salary}</TableCell>
-                  <TableCell>{job.workType}</TableCell>
-                  <TableCell>{job.workLocation}</TableCell>
+                  <TableCell>{job?.jobTitle}</TableCell>
+                  <TableCell>{job?.experience}</TableCell>
+                  <TableCell>{job?.location}</TableCell>
+                  <TableCell>{job?.CompanyName}</TableCell>
+                  <TableCell>{job?.salary}</TableCell>
+                  <TableCell>{job?.workType}</TableCell>
+                  <TableCell>{job?.workLocation}</TableCell>
                   <TableCell>
                     <>
                       {" "}
@@ -175,7 +175,7 @@ const EmployerPage: React.FC = () => {
                         job.createdBy
                       )}
                     </>
-                    {job.createdBy == localStorage.getItem("authUser") ? (
+                    {job?.createdBy == localStorage.getItem("authUser") ? (
                       <Button
                         startIcon={<DeleteIcon />}
                         onClick={() => deleteJob(job._id)}
